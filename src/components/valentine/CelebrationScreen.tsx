@@ -45,7 +45,7 @@ const CelebrationScreen = ({ isYes, onComplete }: CelebrationScreenProps) => {
   if (isYes) {
     // Happy celebration! 🎉
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 valentine-gradient relative overflow-hidden">
+      <div className="h-screen overflow-hidden flex flex-col items-center justify-center p-4 valentine-gradient relative">
         <CreatedBy />
         {/* Confetti explosion */}
         <div className="fixed inset-0 pointer-events-none z-0">
@@ -84,7 +84,7 @@ const CelebrationScreen = ({ isYes, onComplete }: CelebrationScreenProps) => {
 
   // Sad screen 💔
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-muted/60 relative overflow-hidden">
+    <div className="h-screen overflow-hidden flex flex-col items-center justify-center p-4 bg-muted/60 relative">
       <CreatedBy />
       {/* Falling broken heart */}
       <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-6xl animate-heart-drop">

@@ -142,7 +142,7 @@ const ValentineExperience = ({
   return (
       <div
           ref={containerRef}
-          className="min-h-screen flex flex-col items-center justify-center p-4 valentine-gradient relative overflow-hidden touch-none"
+          className="h-screen overflow-hidden flex flex-col items-center justify-center p-4 valentine-gradient relative touch-none"
           onMouseMove={handleMouseMove}
       >
         <CreatedBy />

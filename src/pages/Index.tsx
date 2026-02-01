@@ -101,7 +101,7 @@ const Index = () => {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative h-screen overflow-hidden">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Aurora
           colorStops={auroraStops}

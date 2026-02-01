@@ -1,7 +1,7 @@
 import { Github } from "lucide-react";
 
 const CreatedBy = () => (
-  <div className="absolute bottom-5 left-0 right-0 z-10 flex justify-center">
+  <div className="absolute bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-0 right-0 z-10 flex justify-center sm:bottom-6">
     <a
       href="https://github.com/carlsmeister"
       target="_blank"
