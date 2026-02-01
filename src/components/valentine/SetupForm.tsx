@@ -96,9 +96,9 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
   };
 
   return (
-    <div className="h-screen overflow-hidden flex items-center justify-center p-3 sm:p-4 valentine-gradient">
-      <CreatedBy />
+    <div className="h-screen overflow-hidden flex items-start sm:items-center justify-center px-3 pt-6 pb-20 sm:p-4 valentine-gradient">
       <Card className="relative w-full max-w-sm sm:max-w-md border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] ring-1 ring-white/70 overflow-hidden">
+        <CreatedBy containerClassName="absolute left-3 top-3 z-20 flex" compact label="Created with Love" />
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(120%_80%_at_20%_0%,rgba(255,255,255,0.65)_0%,rgba(255,255,255,0.25)_38%,rgba(255,255,255,0.05)_70%,rgba(255,255,255,0)_100%)]"
@@ -199,16 +199,16 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
           {generatedLink && (
             <div className="space-y-3 p-3 sm:p-4 bg-secondary/50 rounded-lg border border-primary/20">
               <p className="text-sm font-medium text-foreground">Your link is ready!</p>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Input
                   readOnly
                   value={generatedLink}
-                  className="text-xs bg-background border-input"
+                  className="text-xs bg-background border-input w-full sm:flex-1 min-w-0"
                 />
                 <Button
                   onClick={copyToClipboard}
                   variant="secondary"
-                  className="shrink-0"
+                  className="w-full sm:w-auto shrink-0"
                 >
                   Copy
                 </Button>
