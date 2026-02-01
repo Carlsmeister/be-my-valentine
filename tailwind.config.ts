@@ -57,6 +57,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Valentine custom colors
+        valentine: {
+          pink: "hsl(var(--valentine-pink))",
+          "pink-light": "hsl(var(--valentine-pink-light))",
+          red: "hsl(var(--valentine-red))",
+          cream: "hsl(var(--valentine-cream))",
+          gold: "hsl(var(--valentine-gold))",
+          cold: "hsl(var(--valentine-cold))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
