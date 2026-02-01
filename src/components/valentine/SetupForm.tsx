@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import CreatedBy from "./CreatedBy";
 
 // Contact method configurations
 const CONTACT_METHODS = {
@@ -58,6 +59,7 @@ interface SetupFormProps {
  */
 const SetupForm = ({ onGenerate }: SetupFormProps) => {
   const [name, setName] = useState("");
+  const [valentine, setValentine] = useState("");
   const [contactMethod, setContactMethod] = useState<ContactMethod>("whatsapp");
   const [contactInfo, setContactInfo] = useState("");
   const [generatedLink, setGeneratedLink] = useState("");
@@ -75,6 +77,7 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
     // Encode settings into URL parameters
     const params = new URLSearchParams();
     if (name.trim()) params.set("from", name.trim());
+    if (valentine.trim()) params.set("to", valentine.trim());
     params.set("method", contactMethod);
     params.set("contact", contactInfo.trim());
 
@@ -94,6 +97,7 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 valentine-gradient">
+      <CreatedBy />
       <Card className="w-full max-w-md border-primary/20 shadow-xl">
         <CardHeader className="text-center space-y-2">
           <div className="text-5xl mb-2">💘</div>
@@ -106,6 +110,21 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
         </CardHeader>
         
         <CardContent className="space-y-6">
+
+          {/* Valentine Name Input */}
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-foreground">
+              Valentine (Optional)
+            </Label>
+            <Input
+                id="name"
+                placeholder="Enter your Valentine's name"
+                value={valentine}
+                onChange={(e) => setValentine(e.target.value)}
+                className="border-input focus:ring-primary"
+            />
+          </div>
+
           {/* Sender Name Input */}
           <div className="space-y-2">
             <Label htmlFor="name" className="text-foreground">

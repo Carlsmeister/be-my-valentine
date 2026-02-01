@@ -22,6 +22,7 @@ const Index = () => {
   const [isYesResponse, setIsYesResponse] = useState(false);
   const [valentineConfig, setValentineConfig] = useState<{
     fromName?: string;
+    toName?: string;
     method: ContactMethod;
     contact: string;
   } | null>(null);
@@ -74,6 +75,7 @@ const Index = () => {
       screenContent = (
         <ValentineExperience
           fromName={valentineConfig?.fromName}
+          toName={valentineConfig?.toName}
           onYes={handleYes}
           onNo={handleNo}
         />

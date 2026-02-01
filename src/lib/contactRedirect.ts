@@ -63,6 +63,7 @@ export function getRedirectUrl(
  */
 export function parseValentineParams(): {
   fromName?: string;
+  toName?: string;
   method: ContactMethod;
   contact: string;
 } | null {
@@ -78,6 +79,7 @@ export function parseValentineParams(): {
 
   return {
     fromName: params.get("from") || undefined,
+    toName: params.get("to") || undefined,
     method,
     contact,
   };

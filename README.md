@@ -1,73 +1,42 @@
-# Welcome to your Lovable project
+# Valentine Vibes
 
-## Project info
+A playful Valentine's Day web experience with an escaping "No" button, floating hearts, and a dreamy aurora backdrop. Built as a vibe‑coding project with a big thank‑you to Lovable AI for the creative boost and tooling magic.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Features
+- Valentine setup flow with shareable link generation
+- Escaping "No" button interactions with playful text changes
+- Aurora background + floating hearts ambience
+- Responsive layout for mobile and desktop
 
-## How can I edit this code?
+## Tech Stack
+- Vite
+- React + TypeScript
+- Tailwind CSS
+- shadcn/ui
+- OGL (WebGL)
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting Started
+Prerequisites: Node.js + npm
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Scripts
+```sh
+npm run dev
+npm run build
+npm run preview
+npm run lint
+npm run test
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Credits
+Built with Lovable AI — thank you for helping turn ideas into a fun, shippable experience.
 
-**Use GitHub Codespaces**
+## Project Notes
+This was intentionally built as a vibe‑coding project: fast iteration, playful visuals, and creative experimentation over heavy architecture.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## License
+MIT.

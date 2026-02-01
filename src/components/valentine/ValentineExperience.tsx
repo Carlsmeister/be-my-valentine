@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import FloatingHearts from "./FloatingHearts";
+import CreatedBy from "./CreatedBy";
 
 // Funny "No" button texts that change with each escape
 const NO_BUTTON_TEXTS = [
@@ -18,6 +19,7 @@ const MAX_ESCAPES = 7;
 
 interface ValentineExperienceProps {
   fromName?: string;
+  toName?: string;
   onYes: () => void;
   onNo: () => void;
 }
@@ -28,6 +30,7 @@ interface ValentineExperienceProps {
  */
 const ValentineExperience = ({
                                fromName,
+                               toName,
                                onYes,
                                onNo,
                              }: ValentineExperienceProps) => {  const [escapeCount, setEscapeCount] = useState(0);
@@ -137,12 +140,13 @@ const ValentineExperience = ({
           className="min-h-screen flex flex-col items-center justify-center p-4 valentine-gradient relative overflow-hidden touch-none"
           onMouseMove={handleMouseMove}
       >
+        <CreatedBy />
         <FloatingHearts />
 
         <div className="text-center space-y-8 z-10 max-w-lg mx-auto">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-6xl font-bold text-primary animate-bounce-soft">
-              Hey, You... 💕
+              Hey, {toName?.trim() || "You"}... 💕
             </h1>
 
             <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed">

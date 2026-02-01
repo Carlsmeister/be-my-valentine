@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CreatedBy from "./CreatedBy";
 
 interface Confetti {
   id: number;
@@ -45,6 +46,7 @@ const CelebrationScreen = ({ isYes, onComplete }: CelebrationScreenProps) => {
     // Happy celebration! 🎉
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 valentine-gradient relative overflow-hidden">
+        <CreatedBy />
         {/* Confetti explosion */}
         <div className="fixed inset-0 pointer-events-none z-0">
           {confetti.map((item) => (
@@ -83,6 +85,7 @@ const CelebrationScreen = ({ isYes, onComplete }: CelebrationScreenProps) => {
   // Sad screen 💔
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-muted/60 relative overflow-hidden">
+      <CreatedBy />
       {/* Falling broken heart */}
       <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-6xl animate-heart-drop">
         💔
