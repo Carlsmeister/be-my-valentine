@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import FloatingHearts from "./FloatingHearts";
 import CreatedBy from "./CreatedBy";
@@ -133,6 +133,11 @@ const ValentineExperience = ({
   const canClickNo = escapeCount >= MAX_ESCAPES;
   const currentNoText =
       NO_BUTTON_TEXTS[Math.min(escapeCount, NO_BUTTON_TEXTS.length - 1)];
+  useEffect(() => {
+    if (escapeCount >= MAX_ESCAPES) {
+      setNoButtonPosition({ x: 0, y: 0 });
+    }
+  }, [escapeCount]);
 
   return (
       <div
@@ -185,8 +190,8 @@ const ValentineExperience = ({
                        ${canClickNo ? "cursor-pointer" : "cursor-not-allowed"}
                        ${!canClickNo ? "hover:[--no-scale:1.05]" : ""}`}
                 style={{
-                  ["--no-x" as any]: `${noButtonPosition.x}px`,
-                  ["--no-y" as any]: `${noButtonPosition.y}px`,
+                  ["--no-x" as never]: `${noButtonPosition.x}px`,
+                  ["--no-y" as never]: `${noButtonPosition.y}px`,
                 }}
             >
               {currentNoText}
