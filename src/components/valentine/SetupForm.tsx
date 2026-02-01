@@ -97,7 +97,7 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
 
   return (
     <div className="h-screen overflow-hidden flex items-start sm:items-center justify-center px-3 pt-6 pb-20 sm:p-4 valentine-gradient">
-      <Card className="relative w-full max-w-sm sm:max-w-md border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] ring-1 ring-white/70 overflow-hidden">
+      <Card className="relative w-full max-w-sm sm:max-w-md max-h-[calc(100vh-6.5rem)] border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_24px_70px_-24px_rgba(0,0,0,0.4)] ring-1 ring-white/70 overflow-hidden flex flex-col">
         <CreatedBy containerClassName="absolute left-3 top-3 z-20 flex" compact label="Created with Love" />
         <span
           aria-hidden="true"
@@ -117,7 +117,7 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
           </CardDescription>
         </CardHeader>
         
-        <CardContent className="relative z-10 space-y-4 sm:space-y-6">
+        <CardContent className="valentine-scroll relative z-10 flex-1 min-h-0 overflow-y-auto overscroll-contain px-3 pb-6 pr-4 scroll-pb-6 space-y-4 sm:space-y-6">
 
           {/* Valentine Name Input */}
           <div className="space-y-2">
