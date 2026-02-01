@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 interface Heart {
   id: number;
   left: number;
+  top: number;
   size: number;
   delay: number;
   duration: number;
@@ -23,6 +24,7 @@ const FloatingHearts = () => {
         newHearts.push({
           id: i,
           left: Math.random() * 100, // Random horizontal position (0-100%)
+          top: Math.random() * 100, // Random vertical position (0-100%)
           size: Math.random() * 20 + 15, // Size between 15-35px
           delay: Math.random() * 5, // Random delay 0-5s
           duration: Math.random() * 4 + 6, // Duration 6-10s
@@ -35,16 +37,18 @@ const FloatingHearts = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
       {hearts.map((heart) => (
         <div
           key={heart.id}
           className="absolute text-primary opacity-60"
           style={{
             left: `${heart.left}%`,
+            top: `${heart.top}%`,
             fontSize: `${heart.size}px`,
             animation: `float-up ${heart.duration}s ease-in-out infinite`,
             animationDelay: `${heart.delay}s`,
+            animationFillMode: "both",
           }}
         >
           💕

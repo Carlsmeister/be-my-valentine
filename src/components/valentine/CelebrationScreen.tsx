@@ -82,7 +82,7 @@ const CelebrationScreen = ({ isYes, onComplete }: CelebrationScreenProps) => {
 
   // Sad screen 💔
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-muted relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-muted/60 relative overflow-hidden">
       {/* Falling broken heart */}
       <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 text-6xl animate-heart-drop">
         💔

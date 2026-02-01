@@ -16,33 +16,33 @@ import { toast } from "sonner";
 const CONTACT_METHODS = {
   email: {
     label: "Email",
-    placeholder: "their-email@example.com",
-    hint: "Enter their email address",
+    placeholder: "your-email@example.com",
+    hint: "Enter your email address",
   },
   sms: {
     label: "SMS / Text",
     placeholder: "+1234567890",
-    hint: "Enter their phone number with country code",
+    hint: "Enter your phone number with country code",
   },
   whatsapp: {
     label: "WhatsApp",
     placeholder: "+1234567890",
-    hint: "Enter their WhatsApp number with country code",
+    hint: "Enter your WhatsApp number with country code",
   },
   snapchat: {
     label: "Snapchat",
     placeholder: "username",
-    hint: "Enter their Snapchat username",
+    hint: "Enter your Snapchat username",
   },
   instagram: {
     label: "Instagram",
     placeholder: "username",
-    hint: "Enter their Instagram username (without @)",
+    hint: "Enter your Instagram username (without @)",
   },
   messenger: {
     label: "Facebook Messenger",
     placeholder: "username or user ID",
-    hint: "Enter their Messenger username or user ID",
+    hint: "Enter your Messenger username or user ID",
   },
 } as const;
 
@@ -63,6 +63,10 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
   const [generatedLink, setGeneratedLink] = useState("");
 
   const handleGenerate = () => {
+    if (!name.trim()) {
+      toast.error("Please enter your name");
+      return;
+    }
     if (!contactInfo.trim()) {
       toast.error("Please enter contact information");
       return;
@@ -94,7 +98,7 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
         <CardHeader className="text-center space-y-2">
           <div className="text-5xl mb-2">💘</div>
           <CardTitle className="text-2xl font-bold text-primary">
-            Create Your Valentine
+            Ask Your Valentine
           </CardTitle>
           <CardDescription className="text-muted-foreground">
             Set up your personalized Valentine's Day message
@@ -102,16 +106,17 @@ const SetupForm = ({ onGenerate }: SetupFormProps) => {
         </CardHeader>
         
         <CardContent className="space-y-6">
-          {/* Sender Name (Optional) */}
+          {/* Sender Name Input */}
           <div className="space-y-2">
             <Label htmlFor="name" className="text-foreground">
-              Your Name (optional)
+              Your Name
             </Label>
             <Input
               id="name"
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
               className="border-input focus:ring-primary"
             />
           </div>

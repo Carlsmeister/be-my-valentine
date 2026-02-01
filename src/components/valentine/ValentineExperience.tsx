@@ -26,120 +26,179 @@ interface ValentineExperienceProps {
  * ValentineExperience - The main interactive Valentine's page
  * Features an escaping "No" button and playful animations
  */
-const ValentineExperience = ({ fromName, onYes, onNo }: ValentineExperienceProps) => {
-  const [escapeCount, setEscapeCount] = useState(0);
+const ValentineExperience = ({
+                               fromName,
+                               onYes,
+                               onNo,
+                             }: ValentineExperienceProps) => {  const [escapeCount, setEscapeCount] = useState(0);
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
   const [isWiggling, setIsWiggling] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const noButtonRef = useRef<HTMLButtonElement>(null);
+  const escapeCooldownRef = useRef(false);
 
-  // Handle the "No" button escape animation
   const handleNoHover = useCallback(() => {
     if (escapeCount >= MAX_ESCAPES) return;
 
-    // Trigger wiggle animation
     setIsWiggling(true);
     setTimeout(() => setIsWiggling(false), 300);
 
-    // Calculate new random position within viewport
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const buttonWidth = 200;
-    const buttonHeight = 60;
-    const padding = 20;
+    const container = containerRef.current;
+    const button = noButtonRef.current;
 
-    const maxX = viewportWidth - buttonWidth - padding * 2;
-    const maxY = viewportHeight - buttonHeight - padding * 2;
+    if (!container || !button) return;
 
-    const newX = Math.random() * maxX - maxX / 2;
-    const newY = Math.random() * maxY - maxY / 2;
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+
+    const margin = 32;
+
+    const currentLeft = buttonRect.left - containerRect.left;
+    const currentTop = buttonRect.top - containerRect.top;
+
+    const baseLeft = currentLeft - noButtonPosition.x;
+    const baseTop = currentTop - noButtonPosition.y;
+
+    const minX = margin - baseLeft;
+    const maxX =
+      containerRect.width - margin - (baseLeft + buttonRect.width);
+    const minY = margin - baseTop;
+    const maxY =
+      containerRect.height - margin - (baseTop + buttonRect.height);
+
+    const safeMinX = Math.min(minX, maxX);
+    const safeMaxX = Math.max(minX, maxX);
+    const safeMinY = Math.min(minY, maxY);
+    const safeMaxY = Math.max(minY, maxY);
+
+    if (!Number.isFinite(safeMinX) || !Number.isFinite(safeMaxX)) return;
+    if (!Number.isFinite(safeMinY) || !Number.isFinite(safeMaxY)) return;
+
+    const newX = Math.random() * (safeMaxX - safeMinX) + safeMinX;
+    const newY = Math.random() * (safeMaxY - safeMinY) + safeMinY;
 
     setNoButtonPosition({ x: newX, y: newY });
     setEscapeCount((prev) => prev + 1);
-  }, [escapeCount]);
+  }, [escapeCount, noButtonPosition.x, noButtonPosition.y]);
 
-  // Handle touch events for mobile
-  const handleNoTouch = useCallback((e: React.TouchEvent) => {
+  const triggerEscape = useCallback(() => {
     if (escapeCount >= MAX_ESCAPES) return;
-    e.preventDefault();
+    if (escapeCooldownRef.current) return;
+    escapeCooldownRef.current = true;
     handleNoHover();
+    setTimeout(() => {
+      escapeCooldownRef.current = false;
+    }, 220);
   }, [escapeCount, handleNoHover]);
 
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (escapeCount >= MAX_ESCAPES) return;
+      const button = noButtonRef.current;
+      const container = containerRef.current;
+      if (!button || !container) return;
+
+      const buttonRect = button.getBoundingClientRect();
+      const margin = 64;
+      const minX = buttonRect.left - margin;
+      const maxX = buttonRect.right + margin;
+      const minY = buttonRect.top - margin;
+      const maxY = buttonRect.bottom + margin;
+
+      if (
+        e.clientX >= minX &&
+        e.clientX <= maxX &&
+        e.clientY >= minY &&
+        e.clientY <= maxY
+      ) {
+        triggerEscape();
+      }
+    },
+    [escapeCount, triggerEscape]
+  );
+
+  const handleNoTouch = useCallback(
+      (e: React.TouchEvent) => {
+        if (escapeCount >= MAX_ESCAPES) return;
+        e.preventDefault();
+        handleNoHover();
+      },
+      [escapeCount, handleNoHover]
+  );
+
   const canClickNo = escapeCount >= MAX_ESCAPES;
-  const currentNoText = NO_BUTTON_TEXTS[Math.min(escapeCount, NO_BUTTON_TEXTS.length - 1)];
+  const currentNoText =
+      NO_BUTTON_TEXTS[Math.min(escapeCount, NO_BUTTON_TEXTS.length - 1)];
 
   return (
-    <div
-      ref={containerRef}
-      className="min-h-screen flex flex-col items-center justify-center p-4 valentine-gradient relative overflow-hidden"
-    >
-      {/* Floating hearts background */}
-      <FloatingHearts />
+      <div
+          ref={containerRef}
+          className="min-h-screen flex flex-col items-center justify-center p-4 valentine-gradient relative overflow-hidden touch-none"
+          onMouseMove={handleMouseMove}
+      >
+        <FloatingHearts />
 
-      {/* Main content */}
-      <div className="text-center space-y-8 z-10 max-w-lg mx-auto">
-        {/* Romantic headline */}
-        <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-primary animate-bounce-soft">
-            Hey, You... 💕
-          </h1>
-          <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed">
-            So I've been thinking...{" "}
-            <span className="block mt-2 text-2xl md:text-3xl font-semibold text-primary">
+        <div className="text-center space-y-8 z-10 max-w-lg mx-auto">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-primary animate-bounce-soft">
+              Hey, You... 💕
+            </h1>
+
+            <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed">
+              So I've been thinking...
+              <span className="block mt-2 text-2xl md:text-3xl font-semibold text-primary">
               Will you be my Valentine? 🥺👉👈
             </span>
-          </p>
-          
-          {/* Personalization from sender */}
-          {fromName && (
-            <p className="text-lg text-muted-foreground italic mt-4">
-              - From {fromName}
             </p>
-          )}
-        </div>
 
-        {/* Response buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12">
-          {/* YES Button - Always prominent and clickable */}
-          <Button
-            onClick={onYes}
-            className="text-xl px-12 py-8 rounded-full bg-primary hover:bg-primary/90 
-                       button-glow-pink animate-pulse-glow transition-all duration-300 
+            {fromName && (
+                <p className="text-lg text-muted-foreground italic mt-4">
+                  – From {fromName}
+                </p>
+            )}
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12 relative">
+            <Button
+                onClick={onYes}
+                className="text-xl px-12 py-8 rounded-full bg-primary hover:bg-primary/90
+                       button-glow-pink animate-pulse-glow transition-all duration-300
                        hover:scale-110 active:scale-95 min-w-[200px]"
-          >
-            Aww, yes! 💘
-          </Button>
+            >
+              Aww, yes! 💘
+            </Button>
 
-          {/* NO Button - Escapes the cursor! */}
-          <Button
-            ref={noButtonRef}
-            onClick={canClickNo ? onNo : undefined}
-            onMouseEnter={!canClickNo ? handleNoHover : undefined}
-            onTouchStart={!canClickNo ? handleNoTouch : undefined}
-            variant="outline"
-            className={`text-lg px-8 py-6 rounded-full transition-all duration-300 min-w-[200px]
+            <Button
+                ref={noButtonRef}
+                onClick={canClickNo ? onNo : undefined}
+                onMouseEnter={!canClickNo ? handleNoHover : undefined}
+                onTouchStart={!canClickNo ? handleNoTouch : undefined}
+                variant="outline"
+                className={`no-button text-lg px-8 py-6 rounded-full min-w-[200px]
                        border-2 border-destructive text-destructive hover:bg-destructive/10
                        ${isWiggling ? "animate-wiggle" : ""}
                        ${canClickNo ? "cursor-pointer" : "cursor-not-allowed"}
-                       ${!canClickNo ? "hover:scale-105" : ""}`}
-            style={{
-              transform: `translate(${noButtonPosition.x}px, ${noButtonPosition.y}px)`,
-              transition: "transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            }}
-          >
-            {currentNoText}
-          </Button>
-        </div>
+                       ${!canClickNo ? "hover:[--no-scale:1.05]" : ""}`}
+                style={{
+                  ["--no-x" as any]: `${noButtonPosition.x}px`,
+                  ["--no-y" as any]: `${noButtonPosition.y}px`,
+                }}
+            >
+              {currentNoText}
+            </Button>
+          </div>
 
-        {/* Escape counter hint */}
-        {escapeCount > 0 && escapeCount < MAX_ESCAPES && (
-          <p className="text-sm text-muted-foreground animate-fade-in">
-            {MAX_ESCAPES - escapeCount} more {MAX_ESCAPES - escapeCount === 1 ? "try" : "tries"} until you can say no... 
-            {escapeCount >= 3 ? " But do you really want to? 🥺" : ""}
-          </p>
-        )}
+          {escapeCount > 0 && escapeCount < MAX_ESCAPES && (
+              <p className="text-sm text-muted-foreground animate-fade-in">
+                {MAX_ESCAPES - escapeCount} more{" "}
+                {MAX_ESCAPES - escapeCount === 1 ? "try" : "tries"} until you can say
+                no...
+                {escapeCount >= 3 ? " But do you really want to? 🥺" : ""}
+              </p>
+          )}
+        </div>
       </div>
-    </div>
   );
 };
 
